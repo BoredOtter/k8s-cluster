@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-cluster-issuer"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+  name: quotes-app
+  namespace: quotes-app
+spec:
+  tls:
+  - hosts:
+    - quotes.boredotter.dev
+    secretName: quotes-app-tls
+  rules:
+  - host: quotes.boredotter.dev
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: quotes-app
+            port:
+              number: 80
