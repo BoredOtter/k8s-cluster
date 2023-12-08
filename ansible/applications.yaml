@@ -1,0 +1,14 @@
+types:
+  flask:
+    quotes:
+      hostname: quotes.boredotter.dev
+      image: nigga2137
+      tag: 1.0.0
+    quotes-dev:
+      hostname: quotes-dev.boredotter.dev
+      image: nigga2138
+      tag: 1.1.5
+    meme-giver:
+      hostname: meme.boredotter.dev
+      image: nigga2139
+      tag: 1.0.6

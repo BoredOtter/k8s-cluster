@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ item.key }}
+  labels:
+    name: {{ item.key }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ item.key }}
+  namespace: {{ item.key }}
+spec:
+  replicas: 1  # You can adjust the number of replicas as needed
+  selector:
+    matchLabels:
+      app: {{ item.key }}
+  template:
+    metadata:
+      labels:
+        app: {{ item.key }}
+    spec:
+      containers:
+      - name: {{ item.key }}
+        image: ksw2137/{{ item.value.image }}:{{ item.value.tag }}  # Replace with the actual image name and tag
+        ports:
+        - containerPort: 5000
+        resources:
+          requests:
+            cpu: "100m"
+            memory: "100Mi"
+          limits:
+            cpu: "500m"
+            memory: "500Mi"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ item.key }}
+  namespace: {{ item.key }}
+spec:
+  selector:
+    app: {{ item.key }}
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 5000
+  type: LoadBalancer  # Use "NodePort" or "ClusterIP" if LoadBalancer isn't available

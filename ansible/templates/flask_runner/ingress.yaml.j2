@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    cert-manager.io/cluster-issuer: "letsencrypt-cluster-issuer"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+  name: {{ item.key }}
+  namespace: {{ item.key }}
+spec:
+  tls:
+  - hosts:
+    - {{ item.key }}.boredotter.dev
+    secretName: {{ item.key }}-tls
+  rules:
+  - host: {{ item.value.hostname }}.boredotter.dev
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: {{ item.key }}
+            port:
+              number: 80
