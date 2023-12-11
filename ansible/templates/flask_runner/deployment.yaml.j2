@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: {{ item.key }}
-        image: ksw2137/{{ item.value.image }}:{{ item.value.tag }}  # Replace with the actual image name and tag
+        image: {{ item.value.image }}:{{ item.value.tag }}  # Replace with the actual image name and tag
         ports:
         - containerPort: 5000
         resources:

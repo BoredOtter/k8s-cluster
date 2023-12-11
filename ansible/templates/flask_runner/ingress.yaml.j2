@@ -10,10 +10,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - {{ item.key }}.boredotter.dev
+    - {{ item.value.hostname }}
     secretName: {{ item.key }}-tls
   rules:
-  - host: {{ item.value.hostname }}.boredotter.dev
+  - host: {{ item.value.hostname }}
     http:
       paths:
       - path: /

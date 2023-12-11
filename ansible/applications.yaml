@@ -2,13 +2,9 @@ types:
   flask:
     quotes:
       hostname: quotes.boredotter.dev
-      image: nigga2137
-      tag: 1.0.0
-    quotes-dev:
-      hostname: quotes-dev.boredotter.dev
-      image: nigga2138
-      tag: 1.1.5
+      image:  ksw2137/quotes-dev
+      tag: latest
     meme-giver:
       hostname: meme.boredotter.dev
-      image: nigga2139
-      tag: 1.0.6
+      image:  ksw2137/meme-giver
+      tag: latest

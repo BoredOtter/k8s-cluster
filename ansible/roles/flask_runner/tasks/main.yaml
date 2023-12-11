@@ -1,10 +1,3 @@
-- name: Debug variables from applications.yaml
-  debug:
-    msg: "{{ item }}"
-  with_dict: "{{ types.flask }}"
-  loop_control:
-    loop_var: item
-
 - name: Create local directory for rendered files
   file:
     path: "{{ playbook_dir }}/tmp/{{ item.key }}"
@@ -28,6 +21,22 @@
     src: "flask_runner/ingress.yaml.j2"
     dest: "{{ playbook_dir }}/tmp/{{ item.key }}/ingress-{{ item.key }}.yaml"
     mode: '0644'
+  with_dict: "{{ types.flask }}"
+  loop_control:
+    loop_var: item
+
+- name: Apply Kubernetes Deployment
+  k8s:
+    state: present
+    src: "{{ playbook_dir }}/tmp/{{ item.key }}/deployment-{{ item.key }}.yaml"
+  with_dict: "{{ types.flask }}"
+  loop_control:
+    loop_var: item
+
+- name: Apply Kubernetes Ingress
+  k8s:
+    state: present
+    src: "{{ playbook_dir }}/tmp/{{ item.key }}/ingress-{{ item.key }}.yaml"
   with_dict: "{{ types.flask }}"
   loop_control:
     loop_var: item

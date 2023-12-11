@@ -1,0 +1,17 @@
+- name: Install Python packages
+  hosts: master0
+  become: yes
+  tasks:
+    - name: Ensure pip is installed
+      apt:
+        name: python3-pip
+        state: present
+        update_cache: yes
+
+    - name: Install pre-requisites
+      pip:
+        name:
+          - openshift
+          - pyyaml
+          - kubernetes
+        executable: pip3

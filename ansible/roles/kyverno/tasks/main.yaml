@@ -1,0 +1,11 @@
+- name: Add kyverno helm repo
+  community.kubernetes.helm_repository:
+    name: kyverno
+    repo_url: https://kyverno.github.io/kyverno/
+
+- name: Install kyverno
+  community.kubernetes.helm:
+    name: kyverno
+    chart_ref: kyverno/kyverno
+    release_namespace: kyverno
+    create_namespace: true

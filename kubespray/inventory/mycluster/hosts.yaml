@@ -1,16 +1,11 @@
 all:
   hosts:
     node1:
-      ansible_host: 34.116.157.115
-      ip: 10.240.0.2
+      ansible_host: 34.116.239.7
+      ip: 10.240.0.10
     node2:
-      ansible_host: 34.116.200.242
-      ip: 10.240.0.3
-      access_ip: 10.240.0.3
-    node3:
-      ansible_host: 34.116.239.12
-      ip: 10.240.0.4
-      access_ip: 10.240.0.4
+      ansible_host: 34.116.220.77
+      ip: 10.240.0.20
   children:
     kube_control_plane:
       hosts:
@@ -19,12 +14,9 @@ all:
       hosts:
         node1:
         node2:
-        node3:
     etcd:
       hosts:
         node1:
-        node2:
-        node3:
     k8s_cluster:
       children:
         kube_control_plane:

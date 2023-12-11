@@ -1,7 +1,9 @@
 - name: Test Kubernetes Flask Role
-  hosts: localhost
+  hosts: master0
   gather_facts: false
+  become: true
   vars_files:
     - applications.yaml
   roles:
+    - cluster_issuer
     - flask_runner
