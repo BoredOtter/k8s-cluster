@@ -1,4 +1,9 @@
 types:
+  code:
+    code:
+      hostname: code.boredotter.dev
+      image: ksw2137/code-server
+      tag: 573874aaac65bca1f9c9fcaf911bc6828d97c91f
   flask:
     quotes:
       hostname: quotes.boredotter.dev
@@ -8,3 +13,4 @@ types:
       hostname: meme.boredotter.dev
       image:  ksw2137/meme-giver
       tag: latest
+

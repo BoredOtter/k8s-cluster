@@ -5,5 +5,7 @@
   vars_files:
     - applications.yaml
   roles:
-    - cluster_issuer
-    - flask_runner
+    # - cluster_issuer
+    # - flask_runner
+    - code_server
+

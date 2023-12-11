@@ -11,7 +11,7 @@ metadata:
   name: {{ item.key }}
   namespace: {{ item.key }}
 spec:
-  replicas: 1  # You can adjust the number of replicas as needed
+  replicas: 1
   selector:
     matchLabels:
       app: {{ item.key }}
@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: {{ item.key }}
-        image: {{ item.value.image }}:{{ item.value.tag }}  # Replace with the actual image name and tag
+        image: {{ item.value.image }}:{{ item.value.tag }}
         ports:
         - containerPort: 5000
         resources:
@@ -45,4 +45,4 @@ spec:
   - protocol: TCP
     port: 80
     targetPort: 5000
-  type: LoadBalancer  # Use "NodePort" or "ClusterIP" if LoadBalancer isn't available
+  type: LoadBalancer
