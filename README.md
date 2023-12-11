@@ -15,7 +15,7 @@
 
 -  `kubespray`: This directory contains the modefied repo of Kubespray project.
 
--  `terraform`: This directory contains Terraform configuration files for provisioning infrastructure.
+-  `tofu`: This directory contains OpenTofu configuration files for provisioning infrastructure.
 
 -  `apps`: This directory contains the Kubernetes manifests for deploying applications.
 

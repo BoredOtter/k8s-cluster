@@ -81,6 +81,7 @@ resource "google_compute_instance" "master" {
   network_interface {
     network = google_compute_network.k8s_cluster_network.self_link
     subnetwork = google_compute_subnetwork.k8s_subnet.self_link
+    network_ip = "10.240.0.10"
     access_config {
       nat_ip = google_compute_address.k8s_master_0_public_ip.address
     }
@@ -112,7 +113,7 @@ resource "google_compute_address" "worker_public_ip" {
 }
 
 resource "google_compute_instance" "worker" {
-  count        = 2
+  count        = 1
   name         = "worker-${count.index}"
   machine_type = "e2-standard-2"
   zone = "${var.region}-a"
@@ -127,6 +128,7 @@ resource "google_compute_instance" "worker" {
   network_interface {
     network = google_compute_network.k8s_cluster_network.self_link
     subnetwork = google_compute_subnetwork.k8s_subnet.self_link
+    network_ip = "10.240.0.2${count.index}"
     access_config {
       nat_ip = google_compute_address.worker_public_ip[count.index].address
     }
