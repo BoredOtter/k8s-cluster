@@ -1,0 +1,23 @@
+---
+- name: Print Kyverno Policy
+  debug:
+    msg: kyverno_policy
+
+- name: Create a list from 'flask' key
+  set_fact:
+    flask_list: "{{ types.flask | dict2items }}"
+
+- name: Display the 'flask' list
+  debug:
+    var: flask_list
+
+# - name: Iterate through main keys of flask_list and check for cosign_key
+#   debug:
+#     msg: "Processing key {{ item.key }} with value {{ item.value }}{% if 'cosign_key' in item.value %} and cosign_key exists{% endif %}"
+#   with_items: "{{ flask_list }}"
+
+- name: Iterate through main keys of flask_list and print message when cosign_key exists
+  debug:
+    msg: "Processing key {{ item.key }} with value {{ item.value }} and cosign_key exists"
+  when: "'cosign_key' in item.value"
+  with_items: "{{ flask_list }}"

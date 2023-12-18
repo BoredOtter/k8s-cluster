@@ -9,3 +9,6 @@
     chart_ref: kyverno/kyverno
     release_namespace: kyverno
     create_namespace: true
+
+- name: Include Flask Policy Tasks
+  include_tasks: flask_policy.yaml
