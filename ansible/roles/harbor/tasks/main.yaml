@@ -9,31 +9,22 @@
         labels:
           name: harbor
 
-  # todo - dont use patch for using cert-manager
 - name: Install Harbor with Helm
   community.kubernetes.helm:
     name: harbor
     chart_ref: harbor/harbor
     release_namespace: harbor
     values:
-      #Using custom domain for Harbor
       expose:
         ingress:
           hosts:
-            core: harbor.boredotter.dev
-
-- name: Patch Harbor Ingress to use cert-manager
-  kubernetes.core.k8s_json_patch:
-    kind: Ingress
-    name: harbor-ingress
-    namespace: harbor 
-    patch:
-      - op: add
-        path: /metadata/annotations/kubernetes.io~1ingress.class
-        value: "nginx"
-      - op: add
-        path: /metadata/annotations/cert-manager.io~1cluster-issuer
-        value: "letsencrypt-cluster-issuer"
-      - op: add
-        path: /metadata/annotations/nginx.ingress.kubernetes.io~1force-ssl-redirect
-        value: "true"
+            core: harbor.test.boredotter.dev
+          annotations:
+            kubernetes.io/ingress.class: "nginx"
+            cert-manager.io/cluster-issuer: "letsencrypt-cluster-issuer"
+            nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        tls:
+          certSource: secret
+          secret:
+            secretName: harbor-tls
+      externalURL: https://harbor.test.boredotter.dev

@@ -5,4 +5,4 @@
     - k8s_dependencies
     - cluster_issuer
     - harbor
-    - kyverno
+    # - kyverno
