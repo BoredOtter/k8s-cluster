@@ -1,14 +1,11 @@
 - name: Add kyverno helm repo
-  community.kubernetes.helm_repository:
+  kubernetes.core.helm_repository:
     name: kyverno
     repo_url: https://kyverno.github.io/kyverno/
 
 - name: Install kyverno
-  community.kubernetes.helm:
+  kubernetes.core.helm:
     name: kyverno
     chart_ref: kyverno/kyverno
     release_namespace: kyverno
     create_namespace: true
-
-- name: Include Flask Policy Tasks
-  include_tasks: flask_policy.yaml

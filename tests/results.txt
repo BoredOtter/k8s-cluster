@@ -8,3 +8,13 @@ Requests per Second: 6.60943766539435
 Occurrences of values in /k8s responses:
 30 occurrences of {'HOSTNAME': 'meme-giver-76f854ddc7-fq5cp', 'KUBERNETES_PORT': 'tcp://10.233.0.1:443'}
 20 occurrences of {'HOSTNAME': 'meme-giver-76f854ddc7-nbp2x', 'KUBERNETES_PORT': 'tcp://10.233.0.1:443'}
+
+Test Results for 100 requests to https://meme.boredotter.dev
+Total Requests: 100
+Successful Requests: 100
+Total Time: 24.096759557724 seconds
+Requests per Second: 4.149935586170793
+
+Occurrences of values in /k8s responses:
+25 occurrences of {'HOSTNAME': 'meme-giver-76f854ddc7-fq5cp', 'KUBERNETES_PORT': 'tcp://10.233.0.1:443'}
+25 occurrences of {'HOSTNAME': 'meme-giver-76f854ddc7-nbp2x', 'KUBERNETES_PORT': 'tcp://10.233.0.1:443'}

@@ -1,0 +1,8 @@
+- name: Install Promtail with Helm
+  kubernetes.core.helm:
+    name: promtail
+    chart_ref: grafana/promtail
+    release_namespace: monitoring
+    values:
+      promtail:
+        enabled: true

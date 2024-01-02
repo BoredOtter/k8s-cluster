@@ -5,4 +5,3 @@
     # - k8s_dependencies
     # - cluster_issuer
     - helm_deployments
-    # - kyverno

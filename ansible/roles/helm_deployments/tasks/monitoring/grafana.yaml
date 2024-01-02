@@ -1,0 +1,40 @@
+- name: Add Grafana Helm repository
+  kubernetes.core.helm_repository:
+    name: grafana
+    repo_url: https://grafana.github.io/helm-charts
+
+- name: Install Grafana with Helm
+  kubernetes.core.helm:
+    name: grafana
+    chart_ref: grafana/grafana
+    release_namespace: monitoring
+
+- name: Create Ingress for Grafana
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: networking.k8s.io/v1
+      kind: Ingress
+      metadata:
+        annotations:
+          kubernetes.io/ingress.class: "nginx"
+          cert-manager.io/cluster-issuer: "letsencrypt-cluster-issuer"
+          nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        name: "grafana"
+        namespace: "monitoring"
+      spec:
+        tls:
+        - hosts:
+          - "grafana.boredotter.dev"
+          secretName: "grafana-tls"
+        rules:
+        - host: "grafana.boredotter.dev"
+          http:
+            paths:
+            - path: /
+              pathType: Prefix
+              backend:
+                service:
+                  name: "grafana"
+                  port:
+                    number: 80

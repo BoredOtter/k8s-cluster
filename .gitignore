@@ -1,2 +1,3 @@
 kubespray-venv
 __pycache__
+.vscode
