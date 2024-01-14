@@ -1,0 +1,23 @@
+- name: Install Actions Runner Controller
+  kubernetes.core.helm:
+    name: arc
+    chart_ref: "oci://ghcr.io/actions/actions-runner-controller-charts/gha-runner-scale-set-controller"
+    release_namespace: "arc-systems"
+    create_namespace: yes
+
+- name: Include vault variables
+  include_vars: vault.yaml
+
+- name: Install GHA Runner for each repo
+  loop: "{{ gha_repos }}"
+  loop_control:
+    loop_var: repo
+  kubernetes.core.helm:
+    name: "gha-runner-{{ repo }}"
+    chart_ref: "oci://ghcr.io/actions/actions-runner-controller-charts/gha-runner-scale-set"
+    release_namespace: "arc-runners"
+    create_namespace: yes
+    values:
+      githubConfigUrl: "https://github.com/BoredOtter/{{ repo }}"
+      githubConfigSecret:
+        github_token: "{{ gh_token[repo] }}"

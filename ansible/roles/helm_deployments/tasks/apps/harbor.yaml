@@ -13,7 +13,7 @@
       expose:
         ingress:
           hosts:
-            core: harbor.test.boredotter.dev
+            core: harbor.boredotter.dev
           annotations:
             kubernetes.io/ingress.class: "nginx"
             cert-manager.io/cluster-issuer: "letsencrypt-cluster-issuer"
@@ -22,4 +22,4 @@
           certSource: secret
           secret:
             secretName: harbor-tls
-      externalURL: https://harbor.test.boredotter.dev
+      externalURL: https://harbor.boredotter.dev

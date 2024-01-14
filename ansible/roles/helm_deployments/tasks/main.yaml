@@ -1,13 +1,14 @@
 - name: Run Helm Deployments
   include_tasks: "{{ item }}"
   loop:
-    - misc/namespace.yaml
-    - monitoring/prometheus.yaml 
-    - monitoring/promtail.yaml 
-    - monitoring/loki.yaml
-    - monitoring/grafana.yaml 
-    - apps/harbor.yaml 
-    - apps/argo.yaml
-    - apps/kyverno.yaml
+    # - misc/namespace.yaml
+    # - monitoring/prometheus.yaml 
+    # - monitoring/promtail.yaml 
+    # - monitoring/loki.yaml
+    # - monitoring/grafana.yaml 
+    # - apps/harbor.yaml 
+    # - apps/argo.yaml
+    # - apps/kyverno.yaml
+    - gha/gha_runners.yaml
   loop_control:
     loop_var: item

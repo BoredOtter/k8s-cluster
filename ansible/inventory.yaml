@@ -5,19 +5,22 @@ all:
     worker-01:
       ansible_host: 34.116.220.77
   vars:
-    types:
-      code:
-        code:
-          hostname: code.boredotter.dev
-          image: ksw2137/code-server
-          tag: 573874aaac65bca1f9c9fcaf911bc6828d97c91f
-      flask:
-        quotes:
-          hostname: quotes.boredotter.dev
-          image:  ksw2137/quotes-dev
-          tag: latest
-        meme-giver:
-          hostname: meme.boredotter.dev
-          image:  ksw2137/meme-giver-dev
-          tag: latest
-          cosign_key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE4lpJtjcImtOXBIc3WXqL3Jlf6F6AXV6g+ySG7NRLfI1vefRtaZHRTIr+f87nJcg8muZJeIztUCp6+mWivu4V0Q==
+    gha_repos:
+      - meme-giver
+      - quotes-app
+    # types:
+    #   code:
+    #     code:
+    #       hostname: code.boredotter.dev
+    #       image: ksw2137/code-server
+    #       tag: 573874aaac65bca1f9c9fcaf911bc6828d97c91f
+    #   flask:
+    #     quotes:
+    #       hostname: quotes.boredotter.dev
+    #       image:  ksw2137/quotes-dev
+    #       tag: latest
+    #     meme-giver:
+    #       hostname: meme.boredotter.dev
+    #       image:  ksw2137/meme-giver-dev
+    #       tag: latest
+    #       cosign_key: MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE4lpJtjcImtOXBIc3WXqL3Jlf6F6AXV6g+ySG7NRLfI1vefRtaZHRTIr+f87nJcg8muZJeIztUCp6+mWivu4V0Q==
