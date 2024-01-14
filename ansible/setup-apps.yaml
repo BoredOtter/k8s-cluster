@@ -1,7 +1,0 @@
-- name: Test Kubernetes Flask Role
-  hosts: master
-  gather_facts: false
-  become: true
-  roles:
-    # - flask_runner
-    # - code_server

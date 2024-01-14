@@ -1,8 +1,3 @@
-- name: Add ArgoCD Helm repository
-  kubernetes.core.helm_repository:
-    name: argo
-    repo_url: https://argoproj.github.io/argo-helm
-
 - name: Install ArgoCD with Helm
   kubernetes.core.helm:
     name: argo

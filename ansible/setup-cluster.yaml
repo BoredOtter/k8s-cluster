@@ -2,6 +2,6 @@
   hosts: master
   become: yes
   roles:
-    # - k8s_dependencies
-    # - cluster_issuer
+    - k8s_dependencies
+    - cluster_issuer
     - helm_deployments
