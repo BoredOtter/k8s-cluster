@@ -16,6 +16,9 @@
       data:
         signing.key: WlIvalR1cGZxb1E1YktibkNpcUpmZz09
 
+- name: Include vault variables
+  include_vars: vault.yaml
+
 - name: Install matrix-synapse chart
   kubernetes.core.helm:
     name: matrix-synapse
@@ -25,8 +28,12 @@
     values: 
       config:
         enableRegistration: true
+        recaptcha: #TODO: figure out why captcha need to have app.eleme nt.com domain to work
+          publicKey: "{{ chapta_matrix.publicKey }}"
+          privateKey: "{{ chapta_matrix.privateKey }}"
       extraConfig: #values which will be added to homeserver.yaml
         enable_registration_without_verification: true #TODO: enforce some verification method
+        max_upload_size: 10240M
       serverName: matrix.boredotter.dev
       publicServerName: matrix.boredotter.dev
       ingress: #force matrix to not creating ingress automatically
@@ -48,7 +55,7 @@
         annotations:
           cert-manager.io/cluster-issuer: letsencrypt-cluster-issuer
           nginx.ingress.kubernetes.io/use-regex: "true"
-          nginx.ingress.kubernetes.io/proxy-body-size: 10m
+          nginx.ingress.kubernetes.io/proxy-body-size: 10g
       spec:
         ingressClassName: nginx
         rules:

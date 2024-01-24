@@ -21,7 +21,7 @@ TODO:
 
 ## Deploying Synapse - Matrix homeserver:
 
-`ansible-playbook setup-matrix.yaml -i inventory.yaml`
+`ansible-playbook setup-matrix.yaml -i inventory.yaml --ask-vault-pass`
 
 TODO:
 - find what to do lol
