@@ -1,0 +1,5 @@
+- name: Setup Cluster
+  hosts: master
+  become: yes
+  roles:
+    - matrix

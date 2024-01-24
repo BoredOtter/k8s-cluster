@@ -19,9 +19,9 @@ TODO:
 
   
 
-## Deploying Apps:
+## Deploying Synapse - Matrix homeserver:
 
-`ansible-playbook setup-apps.yaml -i inventory.yaml`
+`ansible-playbook setup-matrix.yaml -i inventory.yaml`
 
 TODO:
-- make easier to specify files to render
+- find what to do lol

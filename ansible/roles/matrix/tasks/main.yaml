@@ -1,0 +1,75 @@
+- name: Add Ananace Helm repository
+  kubernetes.core.helm_repository:
+    name: ananace-charts
+    repo_url: "https://ananace.gitlab.io/charts"
+
+- name: Create secret for signing key
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: signingkey
+        namespace: matrix
+      type: Opaque
+      data:
+        signing.key: WlIvalR1cGZxb1E1YktibkNpcUpmZz09
+
+- name: Install matrix-synapse chart
+  kubernetes.core.helm:
+    name: matrix-synapse
+    chart_ref: ananace-charts/matrix-synapse
+    release_namespace: matrix
+    create_namespace: yes
+    values: 
+      config:
+        enableRegistration: true
+      extraConfig: #values which will be added to homeserver.yaml
+        enable_registration_without_verification: true #TODO: enforce some verification method
+      serverName: matrix.boredotter.dev
+      publicServerName: matrix.boredotter.dev
+      ingress: #force matrix to not creating ingress automatically
+        enabled: false
+      user_dir:
+        enabled: true
+      media_repository:
+        enabled: true
+
+- name: Create Ingress for matrix-synapse
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: networking.k8s.io/v1
+      kind: Ingress
+      metadata:
+        name: matrix-synapse
+        namespace: matrix
+        annotations:
+          cert-manager.io/cluster-issuer: letsencrypt-cluster-issuer
+          nginx.ingress.kubernetes.io/use-regex: "true"
+          nginx.ingress.kubernetes.io/proxy-body-size: 10m
+      spec:
+        ingressClassName: nginx
+        rules:
+        - host: matrix.boredotter.dev
+          http:
+            paths:
+            - path: /_matrix
+              pathType: Prefix
+              backend:
+                service:
+                  name: matrix-synapse
+                  port:
+                    number: 8008
+            - path: /_synapse
+              pathType: Prefix
+              backend:
+                service:
+                  name: matrix-synapse
+                  port:
+                    number: 8008
+        tls:
+        - hosts:
+          - matrix.boredotter.dev
+          secretName: matrix-giver-tls
