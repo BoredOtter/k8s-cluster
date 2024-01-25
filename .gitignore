@@ -2,3 +2,4 @@ kubespray-venv
 __pycache__
 .vscode
 config
+git-ignored

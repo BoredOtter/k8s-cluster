@@ -1,7 +1,7 @@
-- name: Add Grafana Helm repository
-  kubernetes.core.helm_repository:
-    name: grafana
-    repo_url: https://grafana.github.io/helm-charts
+# - name: Add Grafana Helm repository
+#   kubernetes.core.helm_repository:
+#     name: grafana
+#     repo_url: https://grafana.github.io/helm-charts
 
 - name: Install Grafana with Helm
   kubernetes.core.helm:

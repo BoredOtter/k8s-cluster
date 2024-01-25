@@ -1,7 +1,7 @@
-- name: Add Harbor Helm repository
-  kubernetes.core.helm_repository:
-    name: harbor
-    repo_url: https://helm.goharbor.io
+# - name: Add Harbor Helm repository
+#   kubernetes.core.helm_repository:
+#     name: harbor
+#     repo_url: https://helm.goharbor.io
 
 - name: Install Harbor with Helm
   kubernetes.core.helm:

@@ -1,14 +1,22 @@
+- name: Add Helm repositories
+  kubernetes.core.helm_repository:
+    name: "{{ item.name }}"
+    repo_url: "{{ item.url }}"
+    state: present
+  loop: "{{ helm_repos }}"
+
+#TODO: figure out why helm alwys find updates
+- name: Update Helm repositories
+  ansible.builtin.command: helm repo update
+  register: helm_update_result
+  changed_when: "'is up to date' not in helm_update_result.stdout"
+
+- name: Print output of Helm repo update
+  ansible.builtin.debug:
+    msg: "{{ helm_update_result.stdout }}"
+
 - name: Run Helm Deployments
   include_tasks: "{{ item }}"
-  loop:
-    - kyverno/main.yaml #TODO: FIX
-    - monitoring/namespace.yaml
-    - monitoring/prometheus.yaml 
-    - monitoring/promtail.yaml 
-    - monitoring/loki.yaml
-    - monitoring/grafana.yaml 
-    - harbor/main.yaml 
-    - argo/main.yaml
-    - gha_runners/main.yaml
+  loop: "{{ helm_deployments }}"
   loop_control:
     loop_var: item

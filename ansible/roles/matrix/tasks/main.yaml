@@ -32,7 +32,8 @@
           publicKey: "{{ chapta_matrix.publicKey }}"
           privateKey: "{{ chapta_matrix.privateKey }}"
       extraConfig: #values which will be added to homeserver.yaml
-        enable_registration_without_verification: true #TODO: enforce some verification method
+        serve_server_wellknown: true
+        enable_registration_without_verification: false #captcha should work fine
         max_upload_size: 10240M
       serverName: matrix.boredotter.dev
       publicServerName: matrix.boredotter.dev
@@ -70,6 +71,13 @@
                   port:
                     number: 8008
             - path: /_synapse
+              pathType: Prefix
+              backend:
+                service:
+                  name: matrix-synapse
+                  port:
+                    number: 8008
+            - path: /.well-known/matrix/server
               pathType: Prefix
               backend:
                 service:
