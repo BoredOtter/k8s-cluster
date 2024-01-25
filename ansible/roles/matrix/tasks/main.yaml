@@ -1,3 +1,6 @@
+- name: Include vars from vault.yaml
+  include_vars: vault.yaml
+
 - name: Add Ananace Helm repository
   kubernetes.core.helm_repository:
     name: ananace-charts
@@ -14,11 +17,8 @@
         namespace: matrix
       type: Opaque
       data:
-        signing.key: WlIvalR1cGZxb1E1YktibkNpcUpmZz09
-
-- name: Include vault variables
-  include_vars: vault.yaml
-
+        signing.key: "{{ synapse.signingKey }}"
+        
 - name: Install matrix-synapse chart
   kubernetes.core.helm:
     name: matrix-synapse
@@ -29,8 +29,8 @@
       config:
         enableRegistration: true
         recaptcha: #TODO: figure out why captcha need to have app.eleme nt.com domain to work
-          publicKey: "{{ chapta_matrix.publicKey }}"
-          privateKey: "{{ chapta_matrix.privateKey }}"
+          publicKey: "{{ synapse.chapta.publicKey }}"
+          privateKey: "{{ synapse.chapta.privateKey }}"
       extraConfig: #values which will be added to homeserver.yaml
         serve_server_wellknown: true
         enable_registration_without_verification: false #captcha should work fine
