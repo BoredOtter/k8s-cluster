@@ -7,22 +7,15 @@ helm_repos:
     url: https://kyverno.github.io/kyverno/
   - name: harbor
     url: https://helm.goharbor.io
-  #TODO: fix `is not a valid chart repository or cannot be reached:`
-  # - name: arc 
-  #   url: oci://ghcr.io/actions/actions-runner-controller-charts/gha-runner-scale-set-controller
   - name: argo
     url: https://argoproj.github.io/argo-helm
 
 helm_deployments:
-  - kyverno/main.yaml
-  #
+  #- kyverno/main.yaml
   - monitoring/namespace.yaml
   - monitoring/prometheus.yaml 
   - monitoring/promtail.yaml 
   - monitoring/loki.yaml
   - monitoring/grafana.yaml 
-  #
   - harbor/main.yaml 
   - argo/main.yaml
-  #moved as new role
-  # - gha_runners/main.yaml

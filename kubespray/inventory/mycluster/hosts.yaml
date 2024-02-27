@@ -1,11 +1,11 @@
 all:
   hosts:
     node1:
-      ansible_host: 34.116.239.7
-      ip: 10.240.0.10
+      ansible_host: 164.90.223.27
+      ip: 10.114.0.3
     node2:
-      ansible_host: 34.116.220.77
-      ip: 10.240.0.20
+      ansible_host: 64.225.100.74
+      ip: 10.114.0.2
   children:
     kube_control_plane:
       hosts:

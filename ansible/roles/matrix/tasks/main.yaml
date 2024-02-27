@@ -11,6 +11,15 @@
     state: present
     definition:
       apiVersion: v1
+      kind: namespace
+      metadata:
+        name: matrix
+
+- name: Create secret for signing key
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
       kind: Secret
       metadata:
         name: signingkey
@@ -28,13 +37,13 @@
     values: 
       config:
         enableRegistration: true
-        recaptcha: #TODO: figure out why captcha need to have app.eleme nt.com domain to work
+        recaptcha:
           publicKey: "{{ synapse.chapta.publicKey }}"
           privateKey: "{{ synapse.chapta.privateKey }}"
       extraConfig: #values which will be added to homeserver.yaml
         serve_server_wellknown: true
-        enable_registration_without_verification: false #captcha should work fine
-        max_upload_size: 10240M
+        enable_registration_without_verification: false
+        max_upload_size: 1024M
       serverName: matrix.boredotter.dev
       publicServerName: matrix.boredotter.dev
       ingress: #force matrix to not creating ingress automatically

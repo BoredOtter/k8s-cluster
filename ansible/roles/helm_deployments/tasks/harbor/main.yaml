@@ -23,3 +23,5 @@
           secret:
             secretName: harbor-tls
       externalURL: https://harbor.boredotter.dev
+      chartmuseum:
+        enabled: true

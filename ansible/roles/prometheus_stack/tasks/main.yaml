@@ -1,0 +1,41 @@
+- name: Add prometheus-community Helm repository
+  kubernetes.core.helm_repository:
+    name: prometheus-community
+    repo_url: https://prometheus-community.github.io/helm-charts
+
+- name: Install prometheus-stack with Helm
+  kubernetes.core.helm:
+    name: prometheus-stack
+    chart_ref: prometheus-community/kube-prometheus-stack
+    release_namespace: monitoring
+    create_namespace: true
+    
+- name: Create Ingress for Grafana
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: networking.k8s.io/v1
+      kind: Ingress
+      metadata:
+        annotations:
+          kubernetes.io/ingress.class: "nginx"
+          cert-manager.io/cluster-issuer: "letsencrypt-cluster-issuer"
+          nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+        name: "grafana"
+        namespace: "monitoring"
+      spec:
+        tls:
+        - hosts:
+          - "grafana.boredotter.dev"
+          secretName: "grafana-tls"
+        rules:
+        - host: "grafana.boredotter.dev"
+          http:
+            paths:
+            - path: /
+              pathType: Prefix
+              backend:
+                service:
+                  name: "prometheus-stack-grafana"
+                  port:
+                    number: 80
