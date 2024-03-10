@@ -1,0 +1,5 @@
+- name: Setup Argo configuration
+  hosts: master
+  become: yes
+  roles:
+    - argo_configuration

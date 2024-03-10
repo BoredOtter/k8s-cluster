@@ -1,0 +1,40 @@
+- name: Include vars from argo.yaml
+  include_vars: argo.yaml
+
+# - name: Create argo repositories 
+#   k8s:
+#     state: present
+#     definition:
+#       apiVersion: v1
+#       kind: Secret
+#       metadata:
+#         name: repository-meme-giver-deployment
+#         namespace: argo
+#         labels:
+#           argocd.argoproj.io/secret-type: repository
+#       stringData:
+#         name: meme-giver-deployment
+#         type: git
+#         url: 
+#           git@github.com:BoredOtter/meme-giver-deployment.git
+#         sshPrivateKey: "{{ gitReposPrivateKey }}"
+
+- name: Create argo repositories 
+  loop: "{{ argo.repositories }}"
+  loop_control:
+    loop_var: repo
+  k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: "{{ repo.name }}"
+        namespace: argo
+        labels:
+          argocd.argoproj.io/secret-type: repository
+      stringData:
+        name: "{{ repo.name }}"
+        type: git
+        url: "{{ repo.git_ssh_url }}"
+        sshPrivateKey: "{{ gitReposPrivateKey }}"

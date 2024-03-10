@@ -1,8 +1,3 @@
-# - name: Add Prometheus Helm repository
-#   kubernetes.core.helm_repository:
-#     name: prometheus-community
-#     repo_url: https://prometheus-community.github.io/helm-charts
-
 - name: Install Prometheus with Helm
   kubernetes.core.helm:
     name: prometheus
@@ -12,3 +7,7 @@
     values: 
       alertmanager:
         enabled: false
+      prometheus-pushgateway:
+        enabled: false
+      prometheus-node-exporter: #TODO: figure out how to scrape ALL
+        enabled: true

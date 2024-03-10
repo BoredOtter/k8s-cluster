@@ -1,0 +1,3 @@
+git_repos:
+  - name: meme-giver
+    repo_name: meme-giver-deployment

@@ -5,17 +5,10 @@ helm_repos:
     url: https://prometheus-community.github.io/helm-charts
   - name: kyverno
     url: https://kyverno.github.io/kyverno/
-  - name: harbor
-    url: https://helm.goharbor.io
-  - name: argo
-    url: https://argoproj.github.io/argo-helm
-
+    
 helm_deployments:
-  #- kyverno/main.yaml
   - monitoring/namespace.yaml
   - monitoring/prometheus.yaml 
   - monitoring/promtail.yaml 
   - monitoring/loki.yaml
   - monitoring/grafana.yaml 
-  - harbor/main.yaml 
-  - argo/main.yaml

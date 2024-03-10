@@ -5,11 +5,12 @@ all:
     worker-01:
       ansible_host: 64.225.100.74
   vars:
-    # users:
-    #   - name: es
-    #     ssh_key: #TODO
-    #   - name: olszak
-    #     ssh_key: #TODO
-    gha_repos:
-      - meme-giver
-      - quotes-app
+    hosts:
+      grafana: grafana.boredotter.dev
+      argocd: argocd.boredotter.dev
+      harbor: harbor.boredotter.dev
+      matrix: matrix.boredotter.dev
+    argo:
+      repositories:
+        - name: meme-giver-deployment
+          git_ssh_url: git@github.com:BoredOtter/meme-giver-deployment.git
