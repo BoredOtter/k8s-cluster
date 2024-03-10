@@ -5,6 +5,9 @@
     create_namespace: true
     release_namespace: argo
     values:
+      controller:
+        metrics:
+          enabled: true #TODO: why dont work :c 
       global:
         addPrometheusAnnotations: true
       configs:
@@ -33,10 +36,10 @@
       spec:
         tls:
         - hosts:
-          - "argo.boredotter.dev"
+          - "{{ hosts.argo }}"
           secretName: "argo-tls"
         rules:
-        - host: "argo.boredotter.dev"
+        - host: "{{ hosts.argo }}"
           http:
             paths:
             - path: /

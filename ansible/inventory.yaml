@@ -7,7 +7,7 @@ all:
   vars:
     hosts:
       grafana: grafana.boredotter.dev
-      argocd: argocd.boredotter.dev
+      argo: argo.boredotter.dev
       harbor: harbor.boredotter.dev
       matrix: matrix.boredotter.dev
     argo:

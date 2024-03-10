@@ -44,8 +44,8 @@
         serve_server_wellknown: true
         enable_registration_without_verification: false
         max_upload_size: 1024M
-      serverName: matrix.boredotter.dev
-      publicServerName: matrix.boredotter.dev
+      serverName: "{{ hosts.matrix }}"
+      publicServerName: "{{ hosts.matrix }}"
       ingress: #force matrix to not creating ingress automatically
         enabled: false
       user_dir:
@@ -69,7 +69,7 @@
       spec:
         ingressClassName: nginx
         rules:
-        - host: matrix.boredotter.dev
+        - host: "{{ hosts.matrix }}"
           http:
             paths:
             - path: /_matrix
@@ -95,5 +95,5 @@
                     number: 8008
         tls:
         - hosts:
-          - matrix.boredotter.dev
+          -  "{{ hosts.matrix }}"
           secretName: matrix-giver-tls

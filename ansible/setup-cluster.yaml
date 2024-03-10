@@ -2,7 +2,9 @@
   hosts: master
   become: yes
   roles:
-    #- k8s_dependencies
-    #- cluster_issuer
+    - k8s_dependencies
+    - cluster_issuer
+    #- harbor
+    #- kyverno?
     - monitoring #TODO: make into seperate roles?
-    #- argo
+    - argo

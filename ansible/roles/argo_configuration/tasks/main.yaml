@@ -1,25 +1,7 @@
 - name: Include vars from argo.yaml
   include_vars: argo.yaml
 
-# - name: Create argo repositories 
-#   k8s:
-#     state: present
-#     definition:
-#       apiVersion: v1
-#       kind: Secret
-#       metadata:
-#         name: repository-meme-giver-deployment
-#         namespace: argo
-#         labels:
-#           argocd.argoproj.io/secret-type: repository
-#       stringData:
-#         name: meme-giver-deployment
-#         type: git
-#         url: 
-#           git@github.com:BoredOtter/meme-giver-deployment.git
-#         sshPrivateKey: "{{ gitReposPrivateKey }}"
-
-- name: Create argo repositories 
+- name: Create Argo repositories 
   loop: "{{ argo.repositories }}"
   loop_control:
     loop_var: repo
@@ -29,7 +11,7 @@
       apiVersion: v1
       kind: Secret
       metadata:
-        name: "{{ repo.name }}"
+        name: "argo-repository-{{ repo.name }}"
         namespace: argo
         labels:
           argocd.argoproj.io/secret-type: repository
@@ -38,3 +20,60 @@
         type: git
         url: "{{ repo.git_ssh_url }}"
         sshPrivateKey: "{{ gitReposPrivateKey }}"
+
+- name: Create Argo AppProjects
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: argoproj.io/v1alpha1
+      kind: AppProject
+      metadata:
+        name: meme-giver
+        namespace: argo
+      spec:
+        clusterResourceWhitelist:
+          - group: '*'
+            kind: '*'
+        destinations:
+          - name: '*'
+            namespace: '*'
+            server: https://kubernetes.default.svc
+        namespaceResourceWhitelist:
+          - group: '*'
+            kind: '*'
+        sourceRepos:
+          - git@github.com:BoredOtter/meme-giver-deployment.git
+
+- name: Create Application
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: argoproj.io/v1alpha1
+      kind: Application
+      metadata:
+        name: meme-giver-test
+        namespace: argo
+      spec:
+        destination:
+          name: ''
+          namespace: meme-giver-test
+          server: 'https://kubernetes.default.svc'
+        source:
+          path: deployment/
+          repoURL: 'git@github.com:BoredOtter/meme-giver-deployment.git'
+          targetRevision: HEAD
+          directory:
+            recurse: true
+        project: meme-giver
+        syncPolicy:
+          automated:
+            prune: false
+            selfHeal: false
+          retry:
+            limit: 5
+            backoff:
+              duration: 5s
+              maxDuration: 3m0s
+              factor: 2
+          syncOptions:
+            - CreateNamespace=true

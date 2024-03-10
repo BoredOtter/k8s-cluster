@@ -4,12 +4,13 @@
     chart_ref: grafana/grafana
     release_namespace: monitoring
     values:
-    persistence:
-      type: pvc
-      enabled: true
-      storageClassName: local-path
       adminUser: BoredOtter
       adminPassword: admin
+      # TODO: enable after stable dashboards
+      persistence:
+        type: pvc
+        enabled: true
+        storageClassName: local-path
       #Existing datasources like Prometheus
       datasources:
         datasources.yaml:
@@ -25,7 +26,7 @@
         dashboardproviders.yaml:
           apiVersion: 1
           providers:
-          - name: 'default'
+          - name: 'provisioned'
             orgId: 1
             folder: ''
             type: file
@@ -34,7 +35,7 @@
             options:
               path: /var/lib/grafana/dashboards/default
       dashboards:
-        default:
+        provisioned:
           prometheus-stats:
             gnetId: 2
             revision: 2
@@ -42,6 +43,30 @@
           node-exporter:
             gnetId: 1860
             revision: 36
+            datasource: Prometheus
+          logs-per-app:
+            gnetId: 13639
+            revision: 2
+            datasource: Loki 
+          nginx-next-getn:
+            gnetId: 14314
+            revision: 2
+            datasource: Prometheus
+          argo:
+            gnetId: 14584
+            revision: 1
+            datasource: Prometheus
+          kube-state-metrics:
+            gnetId: 13332
+            revision: 12
+            datasource: Prometheus
+          cert-manager:
+            gnetId: 11001
+            revision: 1
+            datasource: Prometheus
+          k8s-cluster-monitoring:
+            gnetId: 315
+            revision: 3
             datasource: Prometheus
 
 
@@ -61,10 +86,10 @@
       spec:
         tls:
         - hosts:
-          - "grafana.boredotter.dev"
+          -  "{{ hosts.grafana }}"
           secretName: "grafana-tls"
         rules:
-        - host: "grafana.boredotter.dev"
+        - host:  "{{ hosts.grafana }}"
           http:
             paths:
             - path: /
