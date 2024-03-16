@@ -28,4 +28,4 @@ all:
           #project settings
           project: custom-tools-test
           namespace: custom-tools-test
-          manifest_source: templates/
+          manifest_source: manifests/

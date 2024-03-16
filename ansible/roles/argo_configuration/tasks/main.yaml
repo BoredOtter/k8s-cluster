@@ -39,7 +39,7 @@
             kind: '*'
         destinations:
           - name: '*'
-            namespace: '"{{ app.namespace }}"'
+            namespace: '*'
             server: https://kubernetes.default.svc
         #TODO: make namespaces in pattern {{ app.name }}-{{ env }}-* }}
         namespaceResourceWhitelist:
@@ -63,7 +63,7 @@
       spec:
         destination:
           name: ''
-          namespace: '"{{ app.namespace }}"'
+          namespace: "{{ app.namespace }}"
           server: 'https://kubernetes.default.svc'
         source:
           path: "{{ app.manifest_source }}"
