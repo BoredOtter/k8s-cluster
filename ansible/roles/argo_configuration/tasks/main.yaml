@@ -2,33 +2,36 @@
   include_vars: argo.yaml
 
 - name: Create Argo repositories 
-  loop: "{{ argo.repositories }}"
+  loop: "{{ argo.applications }}"
   loop_control:
-    loop_var: repo
+    loop_var: app
   k8s:
     state: present
     definition:
       apiVersion: v1
       kind: Secret
       metadata:
-        name: "argo-repository-{{ repo.name }}"
+        name: "repo-{{ app.repo_name }}"
         namespace: argo
         labels:
           argocd.argoproj.io/secret-type: repository
       stringData:
-        name: "{{ repo.name }}"
+        name: "{{ app.repo_name }}"
         type: git
-        url: "{{ repo.git_ssh_url }}"
+        url: "{{ app.git_ssh_url }}"
         sshPrivateKey: "{{ gitReposPrivateKey }}"
 
 - name: Create Argo AppProjects
+  loop: "{{ argo.applications }}"
+  loop_control:
+    loop_var: app
   kubernetes.core.k8s:
     state: present
     definition:
       apiVersion: argoproj.io/v1alpha1
       kind: AppProject
       metadata:
-        name: meme-giver
+        name: "{{ app.project }}"
         namespace: argo
       spec:
         clusterResourceWhitelist:
@@ -36,35 +39,39 @@
             kind: '*'
         destinations:
           - name: '*'
-            namespace: '*'
+            namespace: '"{{ app.namespace }}"'
             server: https://kubernetes.default.svc
+        #TODO: make namespaces in pattern {{ app.name }}-{{ env }}-* }}
         namespaceResourceWhitelist:
           - group: '*'
             kind: '*'
         sourceRepos:
-          - git@github.com:BoredOtter/meme-giver-deployment.git
+          - "{{ app.git_ssh_url }}"
 
 - name: Create Application
+  loop: "{{ argo.applications }}"
+  loop_control:
+    loop_var: app
   kubernetes.core.k8s:
     state: present
     definition:
       apiVersion: argoproj.io/v1alpha1
       kind: Application
       metadata:
-        name: meme-giver-test
+        name: "{{ app.name }}"
         namespace: argo
       spec:
         destination:
           name: ''
-          namespace: meme-giver-test
+          namespace: '"{{ app.namespace }}"'
           server: 'https://kubernetes.default.svc'
         source:
-          path: deployment/
-          repoURL: 'git@github.com:BoredOtter/meme-giver-deployment.git'
+          path: "{{ app.manifest_source }}"
+          repoURL: "{{ app.git_ssh_url }}"
           targetRevision: HEAD
           directory:
             recurse: true
-        project: meme-giver
+        project: "{{ app.project }}"
         syncPolicy:
           automated:
             prune: false

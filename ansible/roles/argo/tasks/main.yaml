@@ -12,10 +12,12 @@
         addPrometheusAnnotations: true
       configs:
         secret:
-          ## Argo expects the password in the secret to be bcrypt hashed. You can create this hash with
+          ## Argo expects the password in the secret to be bcrypt hashed
           ## `htpasswd -nbBC 10 "" admin | tr -d ':\n' | sed 's/$2y/$2a/'`
           ## TODO: passwd form vault, generating in ansible
           argocdServerAdminPassword: $2a$10$wgYPV6JTAdAE6ux50hhfGeeNMroO5nMKDJy/PRO5X7UhE.2aubw0u
+        cm:
+          timeout.reconciliation: 5s
 
 - name: Create Ingress for Argo
   kubernetes.core.k8s:

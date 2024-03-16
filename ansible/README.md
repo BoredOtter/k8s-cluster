@@ -1,6 +1,6 @@
 ## Playbook for setting up basic cluster controllers and serivces:
 
-`ansible-playbook setup-cluster.yaml -i inventory.yaml --ask-vault-pass`
+`ansible-playbook setup-cluster.yaml -i inventory.yaml -u root -ask-vault-pass`
 
 ####  Contains 4 roles:
 
