@@ -10,5 +10,5 @@ helm_deployments:
   - monitoring/namespace.yaml
   - monitoring/prometheus.yaml 
   - monitoring/promtail.yaml 
-  - monitoring/loki.yaml
+  #- monitoring/loki.yaml
   - monitoring/grafana.yaml 

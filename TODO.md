@@ -1,3 +1,5 @@
 - [ ] Separate adding helm repos from installing helm charts
 - [ ] Separate helm repos should run before installing helm charts
 - [ ] After adding repos, should run `helm repo update`
+- [ ] Fix loki installation in ansible
+- [ ] Move out helm repos to inventory, or some better place

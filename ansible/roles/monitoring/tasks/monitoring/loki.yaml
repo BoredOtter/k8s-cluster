@@ -17,3 +17,4 @@
       gateway:
         basicauth:
           auth_enabled: false
+      deploymentMode: 'SingleBinary<->SimpleScalable'

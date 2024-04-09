@@ -1,7 +1,19 @@
+- name: Add ArgoCD Helm repo
+  kubernetes.core.helm_repository:
+    name: argo
+    repo_url: https://argoproj.github.io/argo-helm
+
+- name: Update Helm repos
+  ansible.builtin.command:
+    cmd: helm repo update
+  args:
+    executable: /bin/bash
+
 - name: Install ArgoCD with Helm
   kubernetes.core.helm:
     name: argo
     chart_ref: argo/argo-cd
+    chart_version: 6.7.10
     create_namespace: true
     release_namespace: argo
     values:

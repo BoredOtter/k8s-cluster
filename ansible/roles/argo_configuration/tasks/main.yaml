@@ -1,6 +1,19 @@
 - name: Include vars from argo.yaml
   include_vars: argo.yaml
 
+- name: Add Argo github webhook secret
+  kubernetes.core.k8s:
+    state: present
+    definition:
+      apiVersion: v1
+      kind: Secret
+      metadata:
+        name: argocd-secret
+        namespace: argo
+      type: Opaque
+      stringData:
+        webhook.github.secret: hababa_dabab
+
 - name: Create Argo repositories 
   loop: "{{ argo.applications }}"
   loop_control:
