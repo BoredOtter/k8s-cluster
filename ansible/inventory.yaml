@@ -19,22 +19,22 @@ all:
           #project settings
           project: hms-test
           namespace: hms-test
-          manifest_source: cicd-test/
+          manifest_source: master/
 
-        # - name: meme-giver-test
-        #   #repository settings
-        #   repo_name: meme-giver-deployment
-        #   git_ssh_url: git@github.com:BoredOtter/meme-giver-deployment.git
-        #   #project settings
-        #   project: meme-giver-test
-        #   namespace: meme-giver-test
-        #   manifest_source: deployment/
+        - name: meme-giver-test
+          #repository settings
+          repo_name: meme-giver-deployment
+          git_ssh_url: git@github.com:BoredOtter/meme-giver-deployment.git
+          #project settings
+          project: meme-giver-test
+          namespace: meme-giver-test
+          manifest_source: deployment/
 
-        # - name: custom-tools-test
-        #   #repository settings
-        #   repo_name: custom-images-manifests
-        #   git_ssh_url: git@github.com:BoredOtter/custom-images-manifests.git
-        #   #project settings
-        #   project: custom-tools-test
-        #   namespace: custom-tools-test
-        #   manifest_source: manifests/
+        - name: custom-tools-test
+          #repository settings
+          repo_name: custom-images-manifests
+          git_ssh_url: git@github.com:BoredOtter/custom-images-manifests.git
+          #project settings
+          project: custom-tools-test
+          namespace: custom-tools-test
+          manifest_source: manifests/

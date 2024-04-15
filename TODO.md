@@ -3,3 +3,4 @@
 - [ ] After adding repos, should run `helm repo update`
 - [ ] Fix loki installation in ansible
 - [ ] Move out helm repos to inventory, or some better place
+- [ ] Find way for simple user authentication. Maybe Keycloak as OIDC provider?
