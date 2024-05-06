@@ -2,19 +2,17 @@
   kubernetes.core.helm:
     name: loki
     chart_ref: grafana/loki
+    chart_version: 4.5.0 #ehh run it on latest version (6.5.0)
     release_namespace: monitoring
     values:
+      deploymentMode: SingleBinary
+      global:
+        dnsService: coredns
       loki:
-        auth_enabled: false #https://github.com/grafana/loki/issues/6729#issuecomment-1324208128
+        auth_enabled: false
         commonConfig:
           replication_factor: 1
         storage:
           type: 'filesystem'
       singleBinary:
         replicas: 1
-      global:
-        dnsService: coredns
-      gateway:
-        basicauth:
-          auth_enabled: false
-      deploymentMode: 'SingleBinary<->SimpleScalable'

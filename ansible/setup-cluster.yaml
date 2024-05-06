@@ -4,7 +4,7 @@
   roles:
     - k8s_dependencies
     - cluster_issuer
-    - harbor
+    #- harbor #TODO: fix crashloopbackoff 
     #- kyverno #TODO: is it worth it?
     - monitoring #TODO: make into seperate roles?
     - argo
