@@ -1,0 +1,26 @@
+- name: Add SonarQube Helm repo
+  kubernetes.core.helm_repository:
+    name: sonarqube
+    repo_url: https://SonarSource.github.io/helm-chart-sonarqube
+
+- name: Install SonarQube with Helm
+  kubernetes.core.helm:
+    name: sonarqube
+    chart_ref: sonarqube/sonarqube
+    release_namespace: sonarqube
+    values:
+
+      ingress:
+        enabled: true
+        hosts:
+          - name: {{ hosts.sonarqube }}
+        annotations:
+          kubernetes.io/ingress.class: "nginx"
+          #nginx.ingress.kubernetes.io/rewrite-target: /
+          cert-manager.io/cluster-issuer: letsencrypt-cluster-issuer
+          nginx.ingress.kubernetes.io/ssl-redirect: "true"
+        tls:
+          - secretName: sonarqube-tls
+            hosts:
+              - {{ hosts.sonarqube }}
+                    

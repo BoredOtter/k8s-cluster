@@ -1,0 +1,21 @@
+- name: Add Aqua Helm repo
+  kubernetes.core.helm_repository:
+    name: aqua
+    repo_url: https://aquasecurity.github.io/helm-charts/
+
+- name: Install Trivy Operator with Helm
+  kubernetes.core.helm:
+    name: trivy-operator
+    chart_ref: aqua/trivy-operator
+    release_namespace: trivy-system
+    chart_version: 0.22.1
+    create_namespace: true
+    values:
+      podAnnotations:
+        prometheus.io/path: /metrics
+        prometheus.io/port: "8080"
+        prometheus.io/scrape: "true"
+      serviceMonitor:
+        enabled: true
+      operator:
+        metricsVulnIdEnabled: true

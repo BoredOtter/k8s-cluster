@@ -8,3 +8,5 @@
     #- kyverno #TODO: is it worth it?
     - monitoring #TODO: make into seperate roles?
     - argo
+    - sonarqube
+    - trivy-operator

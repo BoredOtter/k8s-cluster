@@ -10,6 +10,7 @@ all:
       argo: argo.boredotter.dev
       harbor: harbor.boredotter.dev
       matrix: matrix.boredotter.dev
+      sonarqube: sonarqube.boredotter.dev
     argo:
       applications:
         - name: hms-test

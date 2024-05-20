@@ -68,6 +68,10 @@
             gnetId: 315
             revision: 3
             datasource: Prometheus
+          trivy-operator:
+            gnetId: 16337
+            revision: 12
+            datasource: Prometheus
 
 
 - name: Create Ingress for Grafana
